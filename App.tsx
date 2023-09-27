@@ -1,20 +1,28 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { ThemeProvider } from "@shopify/restyle";
+import theme from "@/utils/theme";
+import Navigation from "@/navigation";
+import { SafeAreaProvider } from "react-native-safe-area-context";
+import { StatusBar } from "expo-status-bar";
+import useUserGlobalStore from "@/store/useUserGlobalStore";
+import { useEffect } from "react";
 
 export default function App() {
+  const { user, updateUser } = useUserGlobalStore();
+  // console.log(`user`, JSON.stringify(user, null, 2));
+
+  // useEffect(() => {
+  //   updateUser({
+  //     email: "timm@test.com",
+  //     name: "tim",
+  //   });
+  //   return () => {};
+  // }, []);
   return (
-    <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <ThemeProvider theme={theme}>
+      <SafeAreaProvider>
+        <Navigation />
+        <StatusBar translucent />
+      </SafeAreaProvider>
+    </ThemeProvider>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
